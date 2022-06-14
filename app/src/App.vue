@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!--        <Player ref="player"></Player>-->
     <StyleEditor ref="styleEditor" :code="currentStyle"></StyleEditor>
     <ResumeEditor ref="resumeEditor" :markdown="currentMarkdown" :enableHtml="enableHtml"></ResumeEditor>
   </div>
@@ -9,7 +8,6 @@
 import StyleEditor from './components/StyleEditor'
 import ResumeEditor from './components/ResumeEditor'
 import './assets/reset.css'
-import Player from "./components/Player";
 
 
 let isPc = (function() {
@@ -37,13 +35,12 @@ document.title += getDateDiff((new Date()).getFullYear() + '-' + ((new Date()).g
 export default {
   name: 'app',
   components: {
-    Player,
     StyleEditor,
     ResumeEditor
   },
   data() {
     return {
-      interval: 20,
+      interval: 50,
       currentStyle: '',
       enableHtml: false,
       fullStyle: [
@@ -146,10 +143,9 @@ html {
   content: counters(section, ".") " ";
   margin-right: .5em;
 }
-.resumeEditor blockquote {
-  margin: 1em;
-  padding: .5em;
-  background: rgba(221,221,221,.5);
+.resumeEditor hr {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
 /*  */
@@ -180,7 +176,7 @@ html {
 
 ----
 
-* 你的智慧让我崇拜
+* 你的智慧让我自叹
 * 你的温柔让我心安
 * 风火雷电予我启示
 * 要做你的另一半
@@ -220,6 +216,7 @@ html {
 * May us to hold each other
 * May us to be in love for long
 
+----
 
 * 枝枝相覆盖
 * 叶叶相交通
@@ -258,7 +255,7 @@ html {
 
     progressivelyShowStyle(n) {
       return new Promise((resolve, reject) => {
-        let interval = this.interval
+        let interval = 30
         let showStyle = (async function() {
           let style = this.fullStyle[n]
           if (!style) {
@@ -287,7 +284,7 @@ html {
     progressivelyShowResume() {
       return new Promise((resolve, reject) => {
         let length = this.fullMarkdown.length
-        let interval = this.interval
+        let interval = 70
         let showResume = () => {
           if (this.currentMarkdown.length < length) {
             this.currentMarkdown = this.fullMarkdown.substring(0, this.currentMarkdown.length + 1)
